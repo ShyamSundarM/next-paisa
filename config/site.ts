@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Manage Paisa",
+  description: "",
   navItems: [
     {
       label: "Home",
@@ -65,5 +65,13 @@ export const siteConfig = {
     docs: "https://heroui.com",
     discord: "https://discord.gg/9b6yyZKmH4",
     sponsor: "https://patreon.com/jrgarciadev",
+  },
+  firebaseConfig: {
+    apiKey: "AIzaSyBq_0iZBJ1XDCIsuCahd8yaOE8uusV2yEw",
+    authDomain: "managepaisa-9e97b.firebaseapp.com",
+    projectId: "managepaisa-9e97b",
+    storageBucket: "managepaisa-9e97b.appspot.com",
+    messagingSenderId: "857816856822",
+    appId: "1:857816856822:web:3dfe6a62662f47c5ea94d7",
   },
 };

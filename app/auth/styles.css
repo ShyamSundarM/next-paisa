@@ -1,0 +1,25 @@
+.signInUpCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 14px;
+}
+
+.mainText {
+  padding: 34px;
+}
+
+.welcomeText {
+  color: #1454af;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.forgotPwd {
+  cursor: pointer;
+  align-self: flex-end;
+  font-size: small;
+}
+
+.submitBtn {
+  align-self: normal;
+}
