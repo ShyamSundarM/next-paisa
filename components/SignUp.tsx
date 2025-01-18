@@ -5,9 +5,11 @@ import { useState } from "react";
 import LockIcon from "@mui/icons-material/Lock";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { MailIcon } from "./ForgotPasswordModal";
 
 export default function SignUp() {
   const [pwdVisible, setPwdVisible] = useState(false);
+  const [rePwdVisible, setRePwdVisible] = useState(false);
 
   return (
     <Form
@@ -34,6 +36,7 @@ export default function SignUp() {
         name="email"
         placeholder="Email Address"
         type="email"
+        startContent={<MailIcon />}
       />
       <Input
         isRequired
@@ -59,6 +62,17 @@ export default function SignUp() {
         name="rePassword"
         placeholder="Re-Enter Password"
         type="password"
+        endContent={
+          <Button
+            className="input-icon"
+            size="sm"
+            onPress={() => setRePwdVisible((vis) => !vis)}
+            isIconOnly
+          >
+            {rePwdVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          </Button>
+        }
+        startContent={<LockIcon />}
       />
       <Button className="submitBtn" color="primary" type="submit">
         SignUp

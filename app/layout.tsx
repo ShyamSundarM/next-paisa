@@ -1,12 +1,13 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Link } from "@heroui/link";
 import clsx from "clsx";
 import { initializeApp } from "firebase/app";
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
+import ForgotPasswordModal from "@/components/ForgotPasswordModal";
+import { ToastContainer } from "react-toastify";
 
 export const app = initializeApp(siteConfig.firebaseConfig);
 
@@ -39,6 +40,8 @@ export default function RootLayout({
       <body className={clsx(fontSans.className)}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <main className="w-full h-full">{children}</main>
+          <ForgotPasswordModal />
+          <ToastContainer />
         </Providers>
       </body>
     </html>
