@@ -13,7 +13,7 @@ export default function SignIn() {
   const [pwdVisible, setPwdVisible] = useState(false);
   return (
     <Form
-      className="w-full flex flex-col gap-4"
+      className="signInForm w-full flex flex-col gap-4"
       validationBehavior="native"
       //onReset={}
       onSubmit={(e) => {

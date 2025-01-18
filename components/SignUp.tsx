@@ -11,7 +11,7 @@ export default function SignUp() {
 
   return (
     <Form
-      className="w-full flex flex-col gap-4"
+      className="signUpForm w-full flex flex-col gap-4"
       validationBehavior="native"
       //onReset={}
       onSubmit={(e) => {

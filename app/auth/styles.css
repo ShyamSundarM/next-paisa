@@ -2,6 +2,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 20px;
   padding: 14px;
+  transition: all 0.5s;
 }
 
 .mainText {
@@ -22,4 +23,19 @@
 
 .submitBtn {
   align-self: normal;
+}
+
+.signInForm,
+.signUpForm {
+  animation-name: appear;
+  animation-duration: 0.8s;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
