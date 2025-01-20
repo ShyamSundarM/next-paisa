@@ -44,7 +44,7 @@ export default function AuthLayout({
               <SignIn />
             </Tab>
             <Tab key="signup" title="Register">
-              <SignUp />
+              <SignUp setSelectedTab={setSelectedTab} />
             </Tab>
           </Tabs>
         </div>
