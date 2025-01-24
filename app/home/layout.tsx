@@ -17,6 +17,11 @@ export default function HomePageLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const peopleApi = useApi<Array<Person>>({
+    url: "people/all",
+    method: "GET",
+  });
+
   useEffect(() => {
     callApi();
     async function callApi() {
@@ -31,11 +36,6 @@ export default function HomePageLayout({
   }, []);
 
   const people = useSelector((state: RootState) => state.people.data);
-
-  const peopleApi = useApi<Array<Person>>({
-    url: "people/all",
-    method: "GET",
-  });
 
   return (
     <div className="homeLayoutRoot flex flex-col">
