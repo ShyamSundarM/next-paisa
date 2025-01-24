@@ -1,0 +1,58 @@
+.homeContent {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 80px;
+  padding: 40px;
+  flex-grow: 1;
+}
+
+.chartContainer {
+  padding: 0px 20px;
+  flex: 1;
+}
+
+.peopleContainer {
+  background-color: red;
+  padding: 0px 20px;
+  overflow: auto;
+  height: 100%;
+}
+
+.personDetailRoot {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 10px 0px;
+  padding: 10px;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.leftDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.rightDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.Name {
+  font-size: large;
+  font-weight: bold;
+}
+
+.Tag {
+  font-size: small;
+}
+
+.personDetailRoot:hover {
+  background-color: rgb(120, 227, 199);
+}
+
+.homeLayoutRoot {
+  height: 100vh;
+}

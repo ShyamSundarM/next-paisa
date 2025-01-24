@@ -121,6 +121,8 @@ export default function SignUp(props: Props) {
           if (resp.data === 2) {
             toast("EmailAddress already exists");
           }
+        } else {
+          toast("Network Error");
         }
       }}
     >

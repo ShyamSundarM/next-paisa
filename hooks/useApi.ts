@@ -1,17 +1,22 @@
+"use client";
+
 import { siteConfig } from "@/config/site";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { useState } from "react";
 
-export default function useApi(config: AxiosRequestConfig) {
+export default function useApi<T>(config: AxiosRequestConfig) {
   const [loading, setLoading] = useState(false);
-  const [respData, setRespData] = useState<AxiosResponse>();
+  const [respData, setRespData] = useState<AxiosResponse<T>>();
 
-  async function CallApi(): Promise<AxiosResponse> {
-    var resp: AxiosResponse;
+  async function CallApi(): Promise<AxiosResponse<T>> {
+    var resp: AxiosResponse<T>;
     try {
       setLoading(true);
       config.baseURL = siteConfig.apiURL;
-      const axiosResp = await axios(config);
+      config.headers = {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      };
+      const axiosResp = await axios<T>(config);
       setRespData(axiosResp);
       resp = axiosResp;
     } catch (e: any) {

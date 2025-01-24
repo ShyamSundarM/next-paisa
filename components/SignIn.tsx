@@ -13,14 +13,17 @@ import { commonSliceActions } from "@/redux/CommonSlice";
 import useApi from "@/hooks/useApi";
 import { authSliceActions } from "@/redux/AuthSlice";
 import { toast, ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { LoginResponse } from "@/types";
 
 export default function SignIn() {
   const [pwdVisible, setPwdVisible] = useState(false);
+  const router = useRouter();
   function forgotPwdClickHandler() {
     store.dispatch(commonSliceActions.setForgotPwdVisibility(true));
   }
 
-  const loginApi = useApi({
+  const loginApi = useApi<LoginResponse>({
     url: "auth/login",
     method: "POST",
   });
@@ -39,13 +42,18 @@ export default function SignIn() {
           password: data.password,
         });
         var resp = await loginApi.executeAsync();
-        if (resp.status === 200 && resp.data.token !== null) {
-          store.dispatch(authSliceActions.Set(resp.data));
-          localStorage.setItem("token", resp.data.token);
-          localStorage.setItem("expiresIn", resp.data.expiresIn);
-          //navigate("/homepage");
+        if (resp.status === 200) {
+          if (resp.data.token !== null) {
+            store.dispatch(authSliceActions.Set(resp.data));
+            localStorage.setItem("token", resp.data.token);
+            localStorage.setItem("expiresIn", resp.data.expiresIn);
+            //navigate("/homepage");
+            router.replace("home");
+          } else {
+            toast("Invalid UserName/Password");
+          }
         } else {
-          toast("Invalid UserName/Password");
+          toast("Network Error");
         }
       }}
     >
