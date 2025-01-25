@@ -23,18 +23,30 @@ export default function HomePageLayout({
     method: "GET",
   });
 
+  const peopleRefresh = useSelector(
+    (state: RootState) => state.common.triggerPeopleRefresh
+  );
+
+  async function callApi() {
+    const resp = await peopleApi.executeAsync();
+    if (resp.status === 200) {
+      console.log(resp.data);
+      store.dispatch(peopleSliceActions.Set(resp.data));
+    } else {
+      toast.error("Network error");
+    }
+  }
+
   useEffect(() => {
     callApi();
-    async function callApi() {
-      const resp = await peopleApi.executeAsync();
-      if (resp.status === 200) {
-        console.log(resp.data);
-        store.dispatch(peopleSliceActions.Set(resp.data));
-      } else {
-        toast.error("Network error");
-      }
-    }
   }, []);
+
+  //listen for refresh
+  useEffect(() => {
+    if (peopleRefresh) {
+      callApi();
+    }
+  }, [peopleRefresh]);
 
   const people = useSelector((state: RootState) => state.people.data);
 

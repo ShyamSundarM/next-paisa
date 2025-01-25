@@ -1,9 +1,11 @@
 import { Person } from "@/types";
 import { Avatar } from "@heroui/react";
+import Link from "next/link";
 
 export default function PersonDetails(props: Person) {
   function clickHandler() {
     //navigate(`${props.id}/txns`, { state: { id: props.id, name: props.name } });
+    //router.push(`/app/home/${props.id}/txns`);
   }
 
   function GetAvatarChars(name: string): string {
@@ -29,7 +31,11 @@ export default function PersonDetails(props: Person) {
   }
 
   return (
-    <div
+    <Link
+      href={{
+        pathname: `/app/home/${props.id}/txns`,
+        query: { id: props.id, name: props.name },
+      }}
       className="personDetailRoot"
       onClick={clickHandler}
       role="button"
@@ -54,6 +60,6 @@ export default function PersonDetails(props: Person) {
           <DeleteOutlineIcon />
         </IconButton> */}
       </div>
-    </div>
+    </Link>
   );
 }

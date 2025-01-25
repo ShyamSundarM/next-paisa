@@ -5,6 +5,7 @@ export const commonSlice = createSlice({
   initialState: {
     forgotPwdModalVisible: false,
     addPersonModalVisible: false,
+    triggerPeopleRefresh: false,
   },
   reducers: {
     setForgotPwdVisibility(state, action) {
@@ -13,6 +14,10 @@ export const commonSlice = createSlice({
 
     setAddPersonVisibility(state, action) {
       state.addPersonModalVisible = action.payload;
+    },
+
+    setPeopleRefresh(state, action) {
+      state.triggerPeopleRefresh = action.payload;
     },
   },
 });

@@ -62,6 +62,7 @@ export default function App() {
       if (resp.status === 200) {
         toast.success("Person added successfully");
         onOpenChange(false);
+        store.dispatch(commonSliceActions.setPeopleRefresh(true));
       } else {
         toast.error(resp.statusText);
       }
@@ -106,7 +107,11 @@ export default function App() {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={SubmitClickHandler}>
+                <Button
+                  color="primary"
+                  onPress={SubmitClickHandler}
+                  isLoading={addPersonApi.loading}
+                >
                   Add
                 </Button>
               </ModalFooter>
