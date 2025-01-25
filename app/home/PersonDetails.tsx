@@ -29,7 +29,12 @@ export default function PersonDetails(props: Person) {
   }
 
   return (
-    <div className="personDetailRoot" onClick={clickHandler}>
+    <div
+      className="personDetailRoot"
+      onClick={clickHandler}
+      role="button"
+      tabIndex={0}
+    >
       <div className="leftDiv">
         <Avatar size="lg" name={GetAvatarChars(props.name)}></Avatar>
         <div>

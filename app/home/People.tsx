@@ -44,7 +44,10 @@ export default function People(props: Props) {
           ))}
         </div>
       ) : (
-        <div>Hi There, add some people to the list by clicking on '+' sign</div>
+        <div>
+          Hi There, add some people to the list by clicking on the &#39;+&#39;
+          sign
+        </div>
       )}
     </>
   );
