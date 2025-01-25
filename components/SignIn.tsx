@@ -53,7 +53,7 @@ export default function SignIn() {
             toast("Invalid UserName/Password");
           }
         } else {
-          toast("Network Error");
+          toast(resp.statusText);
         }
       }}
     >

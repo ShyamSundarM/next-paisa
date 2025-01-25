@@ -21,14 +21,16 @@ body {
 }
 
 .peopleContainer {
-  background-color: red;
   padding: 0px 20px;
   min-height: 0; /* Ensure the container can shrink */
-  overflow-y: auto; /* Enable vertical scrolling */
+  display: flex;
+  flex-direction: column;
 }
 
 .personDetailRoot {
   display: flex;
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 12px;
   flex-direction: row;
   gap: 30px;
   margin: 10px 0px;
@@ -59,9 +61,31 @@ body {
 }
 
 .personDetailRoot:hover {
-  background-color: rgb(120, 227, 199);
+  background-color: rgb(80, 80, 80);
 }
 
 .homeLayoutRoot {
   height: 100vh;
+}
+
+.p-title {
+  font-weight: bold;
+  font-size: 20px;
+  position: sticky; /* Make the title sticky */
+  top: 0; /* Stick the title to the top of the container */
+  z-index: 1; /* Ensure the title stays above other content */
+  padding: 10px 0; /* Optional: Add some padding */
+}
+
+.peopleList {
+  flex-grow: 1; /* Allow the people list to grow and take available space */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding-top: 10px; /* Optional: Add some padding */
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }

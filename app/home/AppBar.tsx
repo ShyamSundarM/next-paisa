@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Navbar,
   NavbarBrand,
@@ -10,10 +12,13 @@ import {
   NavbarMenuItem,
 } from "@heroui/react";
 import { useState } from "react";
-import AndroidIcon from "@mui/icons-material/Android";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import store from "@/redux/store";
+import { useRouter } from "next/navigation";
 
 export default function AppBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
   const menuItems = [
     "Profile",
     "Dashboard",
@@ -26,6 +31,12 @@ export default function AppBar() {
     "Help & Feedback",
     "Log Out",
   ];
+
+  function logOutClickHandler() {
+    localStorage.clear();
+    store.dispatch({ type: "RESET_STATE" });
+    router.replace("/");
+  }
 
   return (
     <Navbar
@@ -42,15 +53,15 @@ export default function AppBar() {
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
-          <AndroidIcon />
-          <p className="font-bold text-inherit">ACME</p>
+          <CurrencyRupeeIcon />
+          <p className="font-bold text-inherit">Paisa</p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
-          <AndroidIcon />
-          <p className="font-bold text-inherit">ACME</p>
+          <CurrencyRupeeIcon />
+          <p className="font-bold text-inherit">Paisa</p>
         </NavbarBrand>
         <NavbarItem>
           <Link color="foreground" href="#">
@@ -70,12 +81,9 @@ export default function AppBar() {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="warning" href="#" variant="flat">
-            Sign Up
+          <Button color="primary" variant="flat" onPress={logOutClickHandler}>
+            LogOut
           </Button>
         </NavbarItem>
       </NavbarContent>

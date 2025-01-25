@@ -65,7 +65,7 @@ export default function SignUp(props: Props) {
         }));
       }
     } else {
-      toast("Error in checking username availability");
+      toast(resp.statusText);
     }
   }
 
@@ -122,7 +122,7 @@ export default function SignUp(props: Props) {
             toast("EmailAddress already exists");
           }
         } else {
-          toast("Network Error");
+          toast(resp.statusText);
         }
       }}
     >

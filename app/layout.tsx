@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import ForgotPasswordModal from "@/components/ForgotPasswordModal";
 import { ToastContainer } from "react-toastify";
+import AddPersonModal from "@/components/AddPersonModal";
 
 export const app = initializeApp(siteConfig.firebaseConfig);
 
@@ -41,6 +42,7 @@ export default function RootLayout({
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <main className="w-full h-full">{children}</main>
           <ForgotPasswordModal />
+          <AddPersonModal />
           <ToastContainer />
         </Providers>
       </body>

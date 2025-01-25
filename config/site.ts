@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
   name: "Manage Paisa",
   description: "",
-  apiURL: "https://localhost:44389/api/",
+  apiURL: "https://paisa.somee.com/api/",
   navItems: [
     {
       label: "Home",

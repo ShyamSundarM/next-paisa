@@ -11,6 +11,7 @@ import { peopleSliceActions } from "@/redux/PeopleSlice";
 import { useSelector } from "react-redux";
 import "./styles.css";
 import People from "./People";
+import { CircularProgress } from "@heroui/react";
 
 export default function HomePageLayout({
   children,
@@ -40,14 +41,20 @@ export default function HomePageLayout({
   return (
     <div className="homeLayoutRoot flex flex-col">
       <AppBar />
-      <div className="homeContent">
-        <div className="chartContainer">
-          <Chart people={people} />
+      {peopleApi.loading ? (
+        <div className="loadingContainer">
+          <CircularProgress label="Loading..." />
         </div>
-        <div className="peopleContainer">
-          <People people={people} isLoading={peopleApi.loading} />
+      ) : (
+        <div className="homeContent">
+          <div className="chartContainer">
+            <Chart people={people} />
+          </div>
+          <div className="peopleContainer">
+            <People people={people} isLoading={peopleApi.loading} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
