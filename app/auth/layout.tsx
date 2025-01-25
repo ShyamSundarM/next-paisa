@@ -4,7 +4,6 @@ import "./styles.css";
 import SignIn from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
 import { Tabs, Tab } from "@heroui/react";
-import { Card, CardBody } from "@heroui/react";
 import { useState } from "react";
 
 export default function AuthLayout({
