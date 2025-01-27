@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { commonSlice } from "./CommonSlice";
 import authSlice from "./AuthSlice";
 import peopleSlice from "./PeopleSlice";
+import txnSlice from "./TxnSlice";
 
 const appReducer = combineReducers({
   common: commonSlice.reducer,
   auth: authSlice.reducer,
   people: peopleSlice.reducer,
+  txn: txnSlice.reducer,
 });
 
 const rootReducer = (state, action) => {

@@ -11,16 +11,18 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@heroui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import store from "@/redux/store";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function AppBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
+  const pathName = usePathname();
+  console.log(pathName);
 
-  if (router.pathname === "auth") {
+  if (pathName === "/auth") {
     return null;
   }
 

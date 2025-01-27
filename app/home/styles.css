@@ -89,3 +89,27 @@ body {
   align-items: center;
   height: 100%;
 }
+
+.noChartData {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartRoot {
+  position: relative;
+}
+
+.noChartDataTitle {
+  font-weight: bolder;
+  font-size: large;
+}
+
+.noChartDataMsg {
+  /* Add any additional styles for the message */
+}

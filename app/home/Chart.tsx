@@ -119,6 +119,22 @@ export default function Chart(props: Props) {
   };
 
   return (
-    <HighchartsReact ref={chartRef} highcharts={Highcharts} options={options} />
+    <div className="chartRoot">
+      {people.length === 0 && (
+        <div className="noChartData">
+          <div className="noChartDataTitle">No data found.</div>
+          <div className="noChartDataMsg">
+            Please add some transactions to show here
+          </div>
+        </div>
+      )}
+      <div className={`chartParent ${people.length === 0 ? "blur" : ""}`}>
+        <HighchartsReact
+          ref={chartRef}
+          highcharts={Highcharts}
+          options={options}
+        />
+      </div>
+    </div>
   );
 }

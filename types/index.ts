@@ -16,3 +16,16 @@ export type Person = {
   lends: number;
   debts: number;
 };
+
+export type Txn = {
+  id: number;
+  reason: string;
+  amount: number;
+  date: string;
+  isPaid: boolean;
+  txnType2U: number;
+  personId: number;
+  txnReference?: string;
+  paidDate?: string;
+  paidTxnReference?: string;
+};
