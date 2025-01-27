@@ -1,7 +1,6 @@
 "use client";
 
 import { Person } from "@/types";
-import AppBar from "./AppBar";
 import Chart from "./Chart";
 import useApi from "@/hooks/useApi";
 import { useEffect } from "react";
@@ -52,7 +51,6 @@ export default function HomePageLayout({
 
   return (
     <div className="homeLayoutRoot flex flex-col">
-      <AppBar />
       {peopleApi.loading ? (
         <div className="loadingContainer">
           <CircularProgress label="Loading..." />

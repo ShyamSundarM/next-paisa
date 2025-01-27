@@ -9,6 +9,7 @@ import { fontSans } from "@/config/fonts";
 import ForgotPasswordModal from "@/components/ForgotPasswordModal";
 import { ToastContainer } from "react-toastify";
 import AddPersonModal from "@/components/AddPersonModal";
+import AppBar from "./AppBar";
 
 export const app = initializeApp(siteConfig.firebaseConfig);
 
@@ -40,6 +41,7 @@ export default function RootLayout({
       <head />
       <body className={clsx(fontSans.className)}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+          <AppBar />
           <main className="w-full h-full">{children}</main>
           <ForgotPasswordModal />
           <AddPersonModal />

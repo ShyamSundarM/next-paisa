@@ -33,11 +33,11 @@ export default function PersonDetails(props: Person) {
   return (
     <Link
       href={{
-        pathname: `/app/home/${props.id}/txns`,
-        query: { id: props.id, name: props.name },
+        pathname: `txns`,
+        query: { personId: props.id },
       }}
       className="personDetailRoot"
-      onClick={clickHandler}
+      //onClick={clickHandler}
       role="button"
       tabIndex={0}
     >

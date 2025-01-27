@@ -14,11 +14,16 @@ import {
 import { useState } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import store from "@/redux/store";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 export default function AppBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
+
+  if (router.pathname === "auth") {
+    return null;
+  }
+
   const menuItems = [
     "Profile",
     "Dashboard",
