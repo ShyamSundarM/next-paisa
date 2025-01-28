@@ -10,6 +10,7 @@ import ForgotPasswordModal from "@/components/ForgotPasswordModal";
 import { ToastContainer } from "react-toastify";
 import AddPersonModal from "@/components/AddPersonModal";
 import AppBar from "./AppBar";
+import TransactionModal from "@/components/TransactionModal";
 
 export const app = initializeApp(siteConfig.firebaseConfig);
 
@@ -46,6 +47,7 @@ export default function RootLayout({
           <ForgotPasswordModal />
           <AddPersonModal />
           <ToastContainer />
+          <TransactionModal />
         </Providers>
       </body>
     </html>
