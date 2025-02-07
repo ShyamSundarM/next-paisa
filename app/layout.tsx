@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import AddPersonModal from "@/components/AddPersonModal";
 import AppBar from "./AppBar";
 import TransactionModal from "@/components/TransactionModal";
+import { Suspense } from "react";
 
 export const app = initializeApp(siteConfig.firebaseConfig);
 
@@ -47,7 +48,9 @@ export default function RootLayout({
           <ForgotPasswordModal />
           <AddPersonModal />
           <ToastContainer />
-          <TransactionModal />
+          <Suspense fallback={<div>Loading...</div>}>
+            <TransactionModal />
+          </Suspense>
         </Providers>
       </body>
     </html>
