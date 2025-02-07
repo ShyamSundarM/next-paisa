@@ -1,0 +1,26 @@
+.txnsPageRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure the root container takes full viewport height */
+}
+
+.txnsPageHeader {
+  flex-shrink: 0; /* Prevent the header from shrinking */
+}
+
+.tableContainer {
+  flex-grow: 1; /* Allow the table container to grow and take available space */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Prevent scrolling on the entire page */
+}
+
+.myNavBar header {
+  width: 100% !important;
+  max-width: 100% !important;
+}

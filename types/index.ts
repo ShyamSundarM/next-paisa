@@ -19,13 +19,13 @@ export type Person = {
 
 export type Txn = {
   id: number;
-  reason: string;
+  personId: number;
   amount: number;
   date: string;
-  isPaid: boolean;
-  txnType2U: number;
-  personId: number;
+  txnDirection: 1 | 0;
+  reason: string;
   txnReference?: string;
-  paidDate?: string;
-  paidTxnReference?: string;
+  isSettled: boolean;
+  txnParentId?: number;
+  children?: Txn[];
 };

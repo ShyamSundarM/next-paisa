@@ -51,20 +51,20 @@ export default function AppBar() {
       isBordered
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
+      className="myNavBar"
     >
+      {/* //toggle button for mobile */}
       <NavbarContent className="sm:hidden" justify="start">
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        />
+        <NavbarMenuToggle />
       </NavbarContent>
-
+      {/* mobile screen logo */}
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
           <CurrencyRupeeIcon />
           <p className="font-bold text-inherit">Paisa</p>
         </NavbarBrand>
       </NavbarContent>
-
+      {/* desktop screen links */}
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
           <CurrencyRupeeIcon />
@@ -86,7 +86,6 @@ export default function AppBar() {
           </Link>
         </NavbarItem>
       </NavbarContent>
-
       <NavbarContent justify="end">
         <NavbarItem>
           <Button color="primary" variant="flat" onPress={logOutClickHandler}>
@@ -94,7 +93,6 @@ export default function AppBar() {
           </Button>
         </NavbarItem>
       </NavbarContent>
-
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>

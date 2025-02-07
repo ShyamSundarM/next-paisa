@@ -7,6 +7,7 @@ export const commonSlice = createSlice({
     addPersonModalVisible: false,
     addTxnModalVisible: false,
     triggerPeopleRefresh: false,
+    triggerTxnsRefresh: false,
   },
   reducers: {
     setForgotPwdVisibility(state, action) {
@@ -23,6 +24,10 @@ export const commonSlice = createSlice({
 
     setPeopleRefresh(state, action) {
       state.triggerPeopleRefresh = action.payload;
+    },
+
+    setTxnsRefresh(state, action) {
+      state.triggerTxnsRefresh = action.payload;
     },
   },
 });

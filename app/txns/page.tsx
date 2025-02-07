@@ -3,6 +3,7 @@
 import useApi from "@/hooks/useApi";
 import store, { RootState } from "@/redux/store";
 import { txnSliceActions } from "@/redux/TxnSlice";
+import "./styles.css";
 import {
   Button,
   divider,
@@ -45,12 +46,32 @@ export default function TxnsPage() {
     "all"
   );
   const showOnlyOptions = ["paid", "un paid"];
+
+  //handle showOnly filter change
+  function showOnlyChangeHandler(value: Iterable<Key>) {
+    setShowOnlyFilter(value);
+    //console.log(value);
+    //const valueArray = Array.from(value);
+  }
+
   const [searchValue, setSearchValue] = useState("");
 
   const txnApi = useApi<Array<Txn>>({
     url: `transaction/all?PersonId=${personId}`,
     method: "GET",
   });
+
+  const triggerTxnsRefresh = useSelector(
+    (state: RootState) => state.common.triggerTxnsRefresh
+  );
+
+  //listen for refresh
+  useEffect(() => {
+    if (triggerTxnsRefresh) {
+      list.reload();
+      store.dispatch(commonSliceActions.setTxnsRefresh(false));
+    }
+  }, [triggerTxnsRefresh]);
 
   const AddTxnClickHandler = () => {
     store.dispatch(commonSliceActions.setAddTxnVisibility(true));
@@ -60,10 +81,9 @@ export default function TxnsPage() {
     return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
   }
 
-  let list = useAsyncList({
+  let list = useAsyncList<Txn>({
     async load({ signal }) {
       let res = await txnApi.executeAsync();
-
       return {
         items: res.data,
       };
@@ -87,7 +107,20 @@ export default function TxnsPage() {
     },
   });
 
+  // var txns: Txn[] = [];
+  // if (showOnlyFilter === "all") {
+  //   txns = list.items;
+  // } else {
+  //   const valueArray = Array.from(showOnlyFilter);
+  //   if (valueArray.includes("paid")) {
+  //     txns = list.items.filter((txn) => txn.isSettled === true);
+  //   } else if (valueArray.includes("un paid")) {
+  //     txns = list.items.filter((txn) => txn.isSettled === false);
+  //   }
+  // }
+
   const columns = [
+    { key: "reason", label: "Reason" },
     {
       key: "date",
       label: "Date",
@@ -97,8 +130,8 @@ export default function TxnsPage() {
       label: "Orig. Amount",
     },
     {
-      key: "hair_color",
-      label: "hair_color",
+      key: "txnReference",
+      label: "Txn Reference",
     },
   ];
 
@@ -106,6 +139,7 @@ export default function TxnsPage() {
     () => ({
       // wrapper: ["max-h-[382px]", "max-w-3xl"],
       th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
+      //table: ["h-full"],
     }),
     []
   );
@@ -142,7 +176,7 @@ export default function TxnsPage() {
               closeOnSelect={false}
               selectedKeys={showOnlyFilter}
               selectionMode="multiple"
-              onSelectionChange={setShowOnlyFilter}
+              onSelectionChange={showOnlyChangeHandler}
             >
               {showOnlyOptions.map((opt) => (
                 <DropdownItem key={opt} className="capitalize">
@@ -162,42 +196,45 @@ export default function TxnsPage() {
         </div>
       </div>
 
-      <Table
-        removeWrapper
-        classNames={classNames}
-        selectionMode="multiple"
-        color="primary"
-        sortDescriptor={list.sortDescriptor}
-        onSortChange={list.sort}
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          isLoading={txnApi.loading}
-          items={list.items}
-          emptyContent={
-            <Lottie
-              //lottieRef={lottieRef}
-              animationData={emptyTxnsAnim}
-              loop={false}
-              //onComplete={handleAnimationComplete}
-              //className="moneyHandAnim w-1/2"
-            />
-          }
-          loadingContent={<div>Loading...</div>}
+      <div className="tableContainer">
+        <Table
+          removeWrapper
+          classNames={classNames}
+          selectionMode="multiple"
+          color="primary"
+          sortDescriptor={list.sortDescriptor}
+          onSortChange={list.sort}
+          isHeaderSticky
         >
-          {(item: Txn) => (
-            <TableRow key={item.id}>
-              {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            isLoading={txnApi.loading}
+            items={list.items} //list.items
+            emptyContent={
+              <Lottie
+                //lottieRef={lottieRef}
+                animationData={emptyTxnsAnim}
+                loop={false}
+                //onComplete={handleAnimationComplete}
+                //className="moneyHandAnim w-1/2"
+              />
+            }
+            loadingContent={<div>Loading...</div>}
+          >
+            {(item: Txn) => (
+              <TableRow key={item.id}>
+                {(columnKey) => (
+                  <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

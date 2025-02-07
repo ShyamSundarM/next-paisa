@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import "./styles.css";
 import People from "./People";
 import { CircularProgress } from "@heroui/react";
+import { commonSliceActions } from "@/redux/CommonSlice";
 
 export default function HomePageLayout({
   children,
@@ -44,6 +45,7 @@ export default function HomePageLayout({
   useEffect(() => {
     if (peopleRefresh) {
       callApi();
+      store.dispatch(commonSliceActions.setPeopleRefresh(false));
     }
   }, [peopleRefresh]);
 
