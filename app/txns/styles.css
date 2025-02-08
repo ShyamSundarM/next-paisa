@@ -24,3 +24,8 @@ body {
   width: 100% !important;
   max-width: 100% !important;
 }
+
+.emptyTableAnim {
+  width: 50%;
+  margin: 0px auto;
+}

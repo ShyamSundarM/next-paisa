@@ -1,18 +1,16 @@
 "use client";
+export const dynamic = "force-static";
 
 import useApi from "@/hooks/useApi";
 import store, { RootState } from "@/redux/store";
-import { txnSliceActions } from "@/redux/TxnSlice";
 import "./styles.css";
 import {
   Button,
-  divider,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
   Input,
-  useSelect,
 } from "@heroui/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -32,10 +30,10 @@ import {
   TableCell,
   getKeyValue,
 } from "@heroui/react";
-import { useAsyncList } from "@react-stately/data";
 import { Txn } from "@/types";
 import { Key } from "@react-types/shared/src/key";
 import { commonSliceActions } from "@/redux/CommonSlice";
+import { toast } from "react-toastify";
 
 export default function TxnsPage() {
   const params = useSearchParams();
@@ -46,6 +44,8 @@ export default function TxnsPage() {
     "all"
   );
   const showOnlyOptions = ["paid", "un paid"];
+  const [dbTxns, setDbTxns] = useState<Array<Txn>>([]);
+  const [filteredTxns, setFilteredTxns] = useState<Array<Txn>>([]);
 
   //handle showOnly filter change
   function showOnlyChangeHandler(value: Iterable<Key>) {
@@ -65,10 +65,52 @@ export default function TxnsPage() {
     (state: RootState) => state.common.triggerTxnsRefresh
   );
 
+  async function fetchTxns() {
+    var resp = await txnApi.executeAsync();
+    if (resp.status === 200) {
+      setDbTxns(resp.data);
+    } else {
+      toast.error("Failed to load transactions");
+    }
+  }
+
+  //filter txns
+  useEffect(() => {
+    var txns: Array<Txn> = [];
+    var showOnlyFilterArray = Array.from(showOnlyFilter);
+
+    //show only filter
+    if (
+      showOnlyFilter === "all" ||
+      (showOnlyFilterArray.includes("paid") &&
+        showOnlyFilterArray.includes("un paid"))
+    ) {
+      txns = dbTxns;
+    } else if (showOnlyFilterArray.includes("paid")) {
+      txns = dbTxns.filter((txn) => txn.isSettled === true);
+    } else {
+      txns = dbTxns.filter((txn) => txn.isSettled === false);
+    }
+
+    //search filter
+    if (searchValue) {
+      txns = txns.filter((txn) =>
+        txn.reason.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    }
+
+    setFilteredTxns(txns);
+  }, [dbTxns, showOnlyFilter, searchValue]);
+
+  //load txns
+  useEffect(() => {
+    fetchTxns();
+  }, [personId]);
+
   //listen for refresh
   useEffect(() => {
     if (triggerTxnsRefresh) {
-      list.reload();
+      // todo list.reload();
       store.dispatch(commonSliceActions.setTxnsRefresh(false));
     }
   }, [triggerTxnsRefresh]);
@@ -80,44 +122,6 @@ export default function TxnsPage() {
   function capitalize(s) {
     return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
   }
-
-  let list = useAsyncList<Txn>({
-    async load({ signal }) {
-      let res = await txnApi.executeAsync();
-      return {
-        items: res.data,
-      };
-    },
-
-    async sort({ items, sortDescriptor }) {
-      return {
-        items: items.sort((a, b) => {
-          let first = a[sortDescriptor.column];
-          let second = b[sortDescriptor.column];
-          let cmp =
-            (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
-
-          if (sortDescriptor.direction === "descending") {
-            cmp *= -1;
-          }
-
-          return cmp;
-        }),
-      };
-    },
-  });
-
-  // var txns: Txn[] = [];
-  // if (showOnlyFilter === "all") {
-  //   txns = list.items;
-  // } else {
-  //   const valueArray = Array.from(showOnlyFilter);
-  //   if (valueArray.includes("paid")) {
-  //     txns = list.items.filter((txn) => txn.isSettled === true);
-  //   } else if (valueArray.includes("un paid")) {
-  //     txns = list.items.filter((txn) => txn.isSettled === false);
-  //   }
-  // }
 
   const columns = [
     { key: "reason", label: "Reason" },
@@ -147,7 +151,7 @@ export default function TxnsPage() {
   return (
     <div className="txnsPageRoot">
       <div className="txnsPageHeader flex justify-between p-4">
-        <div className="txnTitle">{`Transactions with {person.name"} `}</div>
+        <div className="txnTitle">{`Transactions with {person.name} `}</div>
         <div className="txnHeaderOpts flex items-center gap-4">
           <Input
             isClearable
@@ -155,7 +159,7 @@ export default function TxnsPage() {
               base: "max-w-[44%]",
               inputWrapper: "border-1",
             }}
-            placeholder="Search by name..."
+            placeholder="Search by reason..."
             startContent={<SearchIcon />}
             value={searchValue}
             onClear={() => setSearchValue("")}
@@ -202,8 +206,8 @@ export default function TxnsPage() {
           classNames={classNames}
           selectionMode="multiple"
           color="primary"
-          sortDescriptor={list.sortDescriptor}
-          onSortChange={list.sort}
+          //sortDescriptor={list.sortDescriptor} todo
+          //onSortChange={list.sort}
           isHeaderSticky
         >
           <TableHeader columns={columns}>
@@ -213,15 +217,17 @@ export default function TxnsPage() {
           </TableHeader>
           <TableBody
             isLoading={txnApi.loading}
-            items={list.items} //list.items
+            items={filteredTxns}
             emptyContent={
-              <Lottie
-                //lottieRef={lottieRef}
-                animationData={emptyTxnsAnim}
-                loop={false}
-                //onComplete={handleAnimationComplete}
-                //className="moneyHandAnim w-1/2"
-              />
+              <div className="emptyTableAnim">
+                <Lottie
+                  //lottieRef={lottieRef}
+                  animationData={emptyTxnsAnim}
+                  loop={false}
+                  //onComplete={handleAnimationComplete}
+                  //className="moneyHandAnim w-1/2"
+                />
+              </div>
             }
             loadingContent={<div>Loading...</div>}
           >
